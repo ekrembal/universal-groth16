@@ -1,0 +1,12 @@
+[package]
+name = "verenc-host"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+verenc-common = { path = "../common" }
+verenc-bridge = { path = "../bridge" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+hex = "0.4"
+clap = { version = "4.0", features = ["derive"] }

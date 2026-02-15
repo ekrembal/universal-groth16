@@ -1,0 +1,23 @@
+{
+  "name": "webgpu-phase2",
+  "version": "0.1.0",
+  "description": "WebGPU-accelerated Groth16 Phase 2 Trusted Setup Ceremony for BN254",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "generate-vectors": "cd .. && go run ./webgpu-phase2/cmd/generate-testvectors"
+  },
+  "dependencies": {
+    "@noble/curves": "^1.8.0",
+    "@noble/hashes": "^1.7.0"
+  },
+  "devDependencies": {
+    "@webgpu/types": "^0.1.52",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}

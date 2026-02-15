@@ -1,0 +1,23 @@
+# Build artifacts
+*.exe
+*.test
+*.out
+
+# Ceremony artifacts (large binary files)
+*.bin
+!webgpu-phase2/testvectors/*.json
+
+# SRS files (very large)
+data/
+
+# Rust build artifacts
+examples/verifiable-encryption/*/target/
+examples/verifiable-encryption/proofs/
+
+# Node modules
+webgpu-phase2/node_modules/
+tsc-frontend/node_modules/
+
+# IDE
+.idea/
+.vscode/

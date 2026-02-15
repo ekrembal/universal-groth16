@@ -1,0 +1,39 @@
+# Rust / Cargo
+**/target/
+
+# Generated proofs and pipeline output
+proofs/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# IDE and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build and debug
+*.log
+/tmp/
+pgo-data.profdata
+
+# RISC0 / SP1 proof artifacts
+**/proof-with-pis.json
+**/proof-with-io.json
+**/seal.bin
+
+# Go (if gnark pipeline is in-tree)
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+vendor/
