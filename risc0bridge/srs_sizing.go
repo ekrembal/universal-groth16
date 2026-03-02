@@ -1,3 +1,5 @@
+//go:build integrations
+
 package risc0bridge
 
 // SRS Sizing Analysis for Universal PlonK Verifier Pipeline

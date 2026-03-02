@@ -1,3 +1,5 @@
+//go:build integrations
+
 // Package risc0bridge provides a gnark PlonK circuit that verifies BN254 Groth16
 // proofs, designed for integrating RISC0's Circom-based STARK-to-SNARK pipeline
 // into the universal PlonK-in-Groth16 wrapper.

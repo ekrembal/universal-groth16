@@ -48,6 +48,8 @@ import (
 	"github.com/consensys/gnark/frontend/cs/scs"
 	"github.com/consensys/gnark/std/algebra/emulated/sw_bn254"
 	recursion_plonk "github.com/consensys/gnark/std/recursion/plonk"
+
+	"github.com/ekrembal/universal-groth16/groth16wrapper"
 	"github.com/consensys/gnark/test/unsafekzg"
 )
 
@@ -135,7 +137,7 @@ func prepareFull(outputPath, ptauPath string, useRaw bool) {
 		log.Fatalf("base VK: %v", err)
 	}
 
-	outerCircuit := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerCircuit := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		BaseKey:           circuitBvk,
 		Proof:             recursion_plonk.PlaceholderProof[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine](innerCCS),
 		CircuitKey:        recursion_plonk.PlaceholderCircuitVerifyingKey[sw_bn254.ScalarField, sw_bn254.G1Affine](innerCCS),

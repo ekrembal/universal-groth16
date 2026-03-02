@@ -1,3 +1,5 @@
+//go:build integrations
+
 package risc0bridge
 
 import (
@@ -17,6 +19,8 @@ import (
 	recursion_groth16 "github.com/consensys/gnark/std/recursion/groth16"
 	recursion_plonk "github.com/consensys/gnark/std/recursion/plonk"
 	"github.com/consensys/gnark/test"
+
+	"github.com/ekrembal/universal-groth16/groth16wrapper"
 	"github.com/consensys/gnark/test/unsafekzg"
 )
 
@@ -185,14 +189,14 @@ func TestWrapGroth16InPlonk(t *testing.T) {
 
 	plonkNbPub := result.PlonkCS.GetNbPublicVariables()
 
-	outerCircuit := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerCircuit := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		BaseKey:           bvk,
 		Proof:             recursion_plonk.PlaceholderProof[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine](result.PlonkCS),
 		CircuitKey:        recursion_plonk.PlaceholderCircuitVerifyingKey[sw_bn254.ScalarField, sw_bn254.G1Affine](result.PlonkCS),
 		InnerPublicInputs: make([]frontend.Variable, plonkNbPub),
 	}
 
-	outerAssignment := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerAssignment := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		Proof:             plonkProof,
 		CircuitKey:        cvk,
 		InnerPublicInputs: []frontend.Variable{50}, // The Groth16 public input passes through

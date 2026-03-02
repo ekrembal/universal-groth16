@@ -1,3 +1,5 @@
+//go:build integrations
+
 package circom
 
 import (

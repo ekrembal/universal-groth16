@@ -1,3 +1,5 @@
+//go:build integrations
+
 // Package twostage implements a PlonK circuit that verifies both a RISC0 STARK
 // PlonK proof and an SP1 PlonK proof.
 //

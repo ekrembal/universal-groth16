@@ -1,3 +1,5 @@
+//go:build integrations
+
 // Package sp1bridge provides utilities for integrating SP1's gnark PlonK proofs
 // with the universal PlonK-in-Groth16 verifier wrapper.
 //

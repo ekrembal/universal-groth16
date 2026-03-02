@@ -1,3 +1,5 @@
+//go:build integrations
+
 package sp1bridge
 
 import (
@@ -14,6 +16,8 @@ import (
 	"github.com/consensys/gnark/std/recursion"
 	recursion_plonk "github.com/consensys/gnark/std/recursion/plonk"
 	"github.com/consensys/gnark/test"
+
+	"github.com/ekrembal/universal-groth16/groth16wrapper"
 	"github.com/consensys/gnark/test/unsafekzg"
 )
 
@@ -118,13 +122,13 @@ func TestSP1BridgeEndToEnd(t *testing.T) {
 	nbPub := innerCcs.GetNbPublicVariables() // 2 for SP1
 	assert.Equal(2, nbPub)
 
-	outerCircuit := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerCircuit := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		BaseKey:           circuitBvk,
 		Proof:             recursion_plonk.PlaceholderProof[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine](innerCcs),
 		CircuitKey:        recursion_plonk.PlaceholderCircuitVerifyingKey[sw_bn254.ScalarField, sw_bn254.G1Affine](innerCcs),
 		InnerPublicInputs: make([]frontend.Variable, nbPub),
 	}
-	outerAssignment := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerAssignment := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		Proof:             circuitProof,
 		CircuitKey:        circuitCvk,
 		InnerPublicInputs: []frontend.Variable{15, 8}, // VkeyHash=15, CommittedValuesDigest=8
@@ -222,13 +226,13 @@ func TestSP1BridgeTwoDifferentCircuits(t *testing.T) {
 	proofA, err := recursion_plonk.ValueOfProof[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine](sp1ProofA.Proof)
 	assert.NoError(err)
 
-	outerCircuitA := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerCircuitA := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		BaseKey:           bvkA,
 		Proof:             recursion_plonk.PlaceholderProof[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine](ccsA),
 		CircuitKey:        recursion_plonk.PlaceholderCircuitVerifyingKey[sw_bn254.ScalarField, sw_bn254.G1Affine](ccsA),
 		InnerPublicInputs: make([]frontend.Variable, 2),
 	}
-	outerAssignmentA := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerAssignmentA := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		Proof:             proofA,
 		CircuitKey:        cvkA,
 		InnerPublicInputs: []frontend.Variable{15, 8},
@@ -253,13 +257,13 @@ func TestSP1BridgeTwoDifferentCircuits(t *testing.T) {
 	proofBCircuit, err := recursion_plonk.ValueOfProof[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine](sp1ProofB.Proof)
 	assert.NoError(err)
 
-	outerCircuitB := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerCircuitB := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		BaseKey:           bvkB,
 		Proof:             recursion_plonk.PlaceholderProof[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine](ccsB),
 		CircuitKey:        recursion_plonk.PlaceholderCircuitVerifyingKey[sw_bn254.ScalarField, sw_bn254.G1Affine](ccsB),
 		InnerPublicInputs: make([]frontend.Variable, 2),
 	}
-	outerAssignmentB := &recursion_plonk.PlonkVerifierGroth16Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
+	outerAssignmentB := &groth16wrapper.Circuit[sw_bn254.ScalarField, sw_bn254.G1Affine, sw_bn254.G2Affine, sw_bn254.GTEl]{
 		Proof:             proofBCircuit,
 		CircuitKey:        cvkB,
 		InnerPublicInputs: []frontend.Variable{100, 7},

@@ -1,3 +1,5 @@
+//go:build integrations
+
 // Package unified implements a PlonK (SCS) circuit that simultaneously verifies
 // a RISC0 Groth16 proof and an SP1 PlonK proof.
 //
